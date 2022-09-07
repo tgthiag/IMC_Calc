@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 import ResultIMC from './ResultIMC';
 import styles from './style';
 
 export default function Form(){
-
     const [altura, setAltura] = useState(null)
     const [Peso, setPeso]= useState(null)
     const [messageIMC, setMessageIMC]= useState("Preencha o peso e a altura.")
@@ -23,36 +22,37 @@ export default function Form(){
             setTextButton("Calcular novamente")
             setMessageIMC("Seu IMC é: ")
             return
-
         }
         setImc(null)
         setTextButton("Calcular")
         setMessageIMC("Preencha o peso e a altura.")
-        
     }
 
     return(
         <View style={styles.formContext}>
-            <View>
-                <Text>Peso</Text>
-                <TextInput
+            <View style={styles.form}>
+                <Text style={styles.formLabel}>Peso</Text>
+                <TextInput style={styles.input}
                 onChangeText={setPeso}
                 value={Peso}
                 placeholder='Ex 65.800'
                 keyboardType='numeric'
                 ></TextInput>
 
-                <Text>Altura</Text>
-                <TextInput
+                <Text style={styles.formLabel}>Altura</Text>
+                <TextInput style={styles.input}
                 onChangeText={setAltura}
                 value={altura}
                 placeholder='Ex 1.75'
                 keyboardType='numeric'
                 ></TextInput>
-
-                <Button 
-                onPress={() => validarImc()}
-                title={textButton}/>
+                
+                <TouchableOpacity 
+                style={styles.buttonCalc}
+                onPress={()=> {
+                    validarImc()}}>
+                    <Text style={styles.textButtonCalc}>{textButton}</Text>
+                </TouchableOpacity>
             </View>
             <ResultIMC messageResultIMC={messageIMC} resultIMC={imc}/>
         </View>
